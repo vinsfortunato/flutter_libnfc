@@ -1,0 +1,13 @@
+name: 'FlutterLibnfcBindings'
+description: 'FFI bindings for libnfc NFC library.'
+output: 'lib/flutter_libnfc_bindings.dart'
+headers:
+  entry-points:
+    - '/usr/local/include/nfc/nfc.h'
+  include-directives:
+    - '**nfc.h'
+    - '**nfc-types.h'
+    - '**nfc-emulation.h'
+compiler-opts:
+  - '-I/usr/local/include/nfc'
+silence-enum-warning: true
