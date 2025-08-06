@@ -1,0 +1,3 @@
+[submodule "third_party/libnfc"]
+	path = third_party/libnfc
+	url = https://github.com/vinsfortunato/libnfc.git

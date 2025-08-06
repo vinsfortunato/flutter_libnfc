@@ -120,7 +120,25 @@ final DynamicLibrary _dylib = () {
   if (Platform.isMacOS || Platform.isIOS) {
     return DynamicLibrary.open('$_libName.framework/$_libName');
   }
-  if (Platform.isAndroid || Platform.isLinux) {
+  if (Platform.isAndroid) {
+    return DynamicLibrary.open('lib$_libName.so');
+  }
+  if (Platform.isLinux) {
+    try {
+      final executablePath = Platform.resolvedExecutable;
+      final lastSeparatorIndex = executablePath.lastIndexOf('/');
+      if (lastSeparatorIndex != -1) {
+        final executableDir = executablePath.substring(0, lastSeparatorIndex);
+        final bundledLibPath = '$executableDir/lib/lib$_libName.so';
+        if (File(bundledLibPath).existsSync()) {
+          return DynamicLibrary.open(bundledLibPath);
+        }
+      }
+    } catch (e) {
+      // Ignore
+    }
+
+    // Fallback to loading from system library path
     return DynamicLibrary.open('lib$_libName.so');
   }
   if (Platform.isWindows) {
