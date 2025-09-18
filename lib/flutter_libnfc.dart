@@ -211,12 +211,17 @@ void _nfcIsolate(SendPort mainSendPort) {
           pnm.ref.nmtAsInt = nfc_modulation_type.NMT_ISO14443A.value;
           pnm.ref.nbrAsInt = nfc_baud_rate.NBR_106.value;
 
+          final totalMs = data.timeout; // milliseconds
+          int pollPeriod = 1; // 1 * 150ms = 150ms
+          int pollNr = (totalMs / (pollPeriod * 150)).ceil();
+          if (pollNr < 1) pollNr = 1;
+          if (pollNr > 255) pollNr = 255;
           final int res = _bindings.nfc_initiator_poll_target(
             pnd!,
             pnm,
             1,
-            255,
-            2,
+            pollNr,
+            pollPeriod,
             pnt,
           );
 

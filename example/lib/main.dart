@@ -40,7 +40,7 @@ class _MyAppState extends State<MyApp> {
     });
 
     try {
-      final tag = await _nfcController.poll();
+      final tag = await _nfcController.poll(timeout: Duration(seconds: 2));
       setState(() {
         _tag = tag;
       });
