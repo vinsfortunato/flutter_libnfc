@@ -1,6 +1,6 @@
 name: flutter_libnfc
 description: "Adds NFC support to Flutter applications using bindings to libfc library."
-version: 0.0.1
+version: 0.0.2
 homepage:
 
 environment:
